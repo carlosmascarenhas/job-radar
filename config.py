@@ -4,57 +4,37 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# Cargo forte: título que já é inequivocamente de desenvolvimento/eng. de
-# software, sem precisar de qualificador junto. Perfil = Backend sênior
-# (PHP/Laravel, Node.js, TypeScript); fullstack/frontend/mobile ficam no fim
-# como rede mais larga (dá pra podar se só interessar backend).
+# Cargo forte: título que já é inequivocamente de BACKEND, sem precisar de
+# qualificador junto. Perfil = Backend sênior com FOCO em PHP/Laravel.
+# NÃO inclui "Desenvolvedor" sozinho de propósito (casava toda vaga de dev,
+# inclusive React Native/frontend) nem títulos de frontend/mobile/fullstack
+# — o foco é backend. Também sem outras linguagens (Node/Java/Python): pra
+# ligar alguma, é só adicionar aqui.
 KEYWORDS_CARGO_FORTE = [
-    # --- Backend (foco principal) ---
+    # --- Backend genérico (não cita a linguagem no título) ---
     "Desenvolvedor Backend",
     "Desenvolvedora Backend",
     "Desenvolvedor Back-end",
+    "Desenvolvedora Back-end",
     "Backend Developer",
     "Back-end Developer",
     "Backend Engineer",
+    "Back-end Engineer",
     "Engenheiro Backend",
-    "Engenheiro de Software",
+    "Engenheira Backend",
     "Software Engineer",
+    "Engenheiro de Software",
+    "Engenheira de Software",
+    # --- PHP / Laravel (foco) ---
     "Desenvolvedor PHP",
-    "Desenvolvedor Laravel",
-    "Desenvolvedor Node",
-    "Desenvolvedor Node.js",
+    "Desenvolvedora PHP",
     "PHP Developer",
+    "Programador PHP",
+    "Programadora PHP",
+    "Desenvolvedor Laravel",
+    "Desenvolvedora Laravel",
     "Laravel Developer",
-    "Node.js Developer",
-    "Desenvolvedor Java",
-    "Desenvolvedor Python",
-    "Desenvolvedor Go",
-    "Desenvolvedor Golang",
-    # --- Cargos de dev genéricos / liderança técnica ---
-    "Desenvolvedor",
-    "Desenvolvedora",
-    "Software Developer",
-    "Programador",
-    "Programadora",
-    "Tech Lead",
-    "Technical Lead",
-    "Engenheiro de Plataforma",
-    "Platform Engineer",
-    # --- Fullstack / frontend / mobile (rede mais larga) ---
-    "Desenvolvedor Full Stack",
-    "Desenvolvedor Fullstack",
-    "Full Stack Developer",
-    "Fullstack Developer",
-    "Desenvolvedor TypeScript",
-    "Desenvolvedor React",
-    "Desenvolvedor Next.js",
-    "Desenvolvedor Frontend",
-    "Desenvolvedor Front-end",
-    "Frontend Developer",
-    "Front-end Developer",
-    "Desenvolvedor Web",
-    "Desenvolvedor Mobile",
-    "Desenvolvedor Flutter",
+    "Programador Laravel",
 ]
 
 # Cargo ambíguo: título que também é usado fora de software (ex:
@@ -79,21 +59,10 @@ QUALIFICADORES_DADOS = [
     "backend",
     "back-end",
     "back end",
-    "fullstack",
-    "full stack",
-    "full-stack",
     "desenvolvimento",
-    "web",
     "api",
     "php",
     "laravel",
-    "node",
-    "node.js",
-    "typescript",
-    "javascript",
-    "react",
-    "java",
-    "python",
 ]
 
 # Stack que aparece como núcleo do título ("Especialista Laravel", "Node
@@ -105,11 +74,6 @@ QUALIFICADORES_DADOS = [
 FERRAMENTAS_TITULO = [
     "Laravel",
     "PHP",
-    "Node",
-    "Node.js",
-    "TypeScript",
-    "React",
-    "Next.js",
 ]
 
 # Palavra de cargo que confirma que a vaga da stack é de desenvolvimento.
@@ -157,8 +121,7 @@ TERMOS_CARGO_EXTRA = [
     "backend",
     "desenvolvedor php",
     "desenvolvedor laravel",
-    "desenvolvedor node",
-    "software engineer",
+    "programador php",
 ]
 
 TERMOS_CARGO = sorted(set(k.lower() for k in KEYWORDS) | set(TERMOS_CARGO_EXTRA))
@@ -166,15 +129,10 @@ TERMOS_CARGO = sorted(set(k.lower() for k in KEYWORDS) | set(TERMOS_CARGO_EXTRA)
 # Stacks buscadas nos sites (rede ampla). A vaga só vira notificação se o
 # TÍTULO também bater no filtro de cargo — então buscar por "laravel" não
 # notifica toda vaga que cita Laravel, só as que têm cargo de dev no título.
-# Focado na stack do perfil (backend PHP/Node/TS). Ajustar conforme o log
-# mostrar termo que rende zero (mesma lógica do perfil original).
+# Foco total em PHP/Laravel (sem Node/TS/React de propósito).
 TERMOS_FERRAMENTA = [
     "php",
     "laravel",
-    "node.js",
-    "typescript",
-    "react",
-    "next.js",
 ]
 
 TERMOS_BUSCA = TERMOS_CARGO + TERMOS_FERRAMENTA

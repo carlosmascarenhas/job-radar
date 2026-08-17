@@ -155,11 +155,17 @@ CASOS_COMBINA_COM = [
     ("presencial-barrada-mesmo-com-cargo", "Desenvolvedor Backend", "São Paulo, SP", "Presencial", PERFIL_BR, False),
     ("cargo-fora-do-escopo-barrado", "Vendedor Externo", "Remoto", "Remoto", PERFIL_BR, False),
     ("cargo-forte-remoto-passa", "Desenvolvedor Backend Sênior", "Remoto", "Remoto", PERFIL_BR, True),
+    ("cargo-forte-laravel-passa", "Desenvolvedor Laravel", "Remoto", "Remoto", PERFIL_BR, True),
+    # Foco PHP/Laravel: frontend/mobile são barrados de propósito, mesmo
+    # sendo vaga de dev remota (React/React Native/frontend fora do escopo).
+    ("frontend-react-native-barrado", "Desenvolvedor React Native", "Remoto", "Remoto", PERFIL_BR, False),
+    ("frontend-react-barrado", "Desenvolvedor Frontend React", "Remoto", "Remoto", PERFIL_BR, False),
     # keywords_ambiguo (ex: "Engenheiro", "Analista de Sistemas") só conta
     # com um qualificador de software junto no título — sozinho é ruído de
-    # outra área (eng. civil, suporte de TI).
+    # outra área (eng. civil, suporte de TI). O qualificador agora é
+    # backend/PHP/Laravel (Java/Node/etc. ficaram fora do escopo).
     ("cargo-ambiguo-sem-qualificador-barrado", "Analista de Sistemas", "Remoto", "Remoto", PERFIL_BR, False),
-    ("cargo-ambiguo-com-qualificador-passa", "Analista de Sistemas Java", "Remoto", "Remoto", PERFIL_BR, True),
+    ("cargo-ambiguo-com-qualificador-passa", "Analista de Sistemas PHP", "Remoto", "Remoto", PERFIL_BR, True),
 ]
 
 
