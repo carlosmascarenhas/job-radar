@@ -4,96 +4,132 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# Cargo forte: título que só existe mesmo em vaga de dados/BI, sem
-# possibilidade real de ser outra área.
+# Cargo forte: título que já é inequivocamente de desenvolvimento/eng. de
+# software, sem precisar de qualificador junto. Perfil = Backend sênior
+# (PHP/Laravel, Node.js, TypeScript); fullstack/frontend/mobile ficam no fim
+# como rede mais larga (dá pra podar se só interessar backend).
 KEYWORDS_CARGO_FORTE = [
-    "Analista de Dados",
-    "Analista BI",
-    "Analista de BI",
-    "Business Intelligence",
-    "Data Analytics",
-    "Analista de Analytics",
-    "Data Analyst",
-    "Desenvolvedor BI",
-    "Consultor BI",
-    "Analista de Inteligência de Negócios",
-    "BI Developer",
-    "BI Analyst",
-    "Analista de Reporting",
-    "Analista de Inteligência de Mercado",
-    "Analista de Indicadores",
-    "Reporting Analyst",
-    "Insights Analyst",
-    "Data Insights Analyst",
-    "MIS Analyst",
-    "Analista de MIS",
-    "Assistente de BI",
-    "Auxiliar de BI",
-    "Analista de Inteligência Comercial",
-    "Data Specialist",
-    "Data Quality Analyst",
-    "Data Intelligence Analyst",
-    "BI & Analytics Analyst",
-    "Analytics Specialist",
-    "Especialista em Dados",
-    "Analista de Planejamento e Dados",
-    # "Datos" (espanhol) não é "Dados" (português) — nenhuma keyword em
-    # português cobre título em espanhol, mesmo sendo a mesma vaga. Faz
-    # sentido aqui no pipeline BR (não só em config_intl.py) porque
-    # LinkedInScraper já busca em Argentina/Chile (ver LOCATIONS_LINKEDIN).
-    "Analista de Datos",
-    "Analítica de Datos",
+    # --- Backend (foco principal) ---
+    "Desenvolvedor Backend",
+    "Desenvolvedora Backend",
+    "Desenvolvedor Back-end",
+    "Backend Developer",
+    "Back-end Developer",
+    "Backend Engineer",
+    "Engenheiro Backend",
+    "Engenheiro de Software",
+    "Software Engineer",
+    "Desenvolvedor PHP",
+    "Desenvolvedor Laravel",
+    "Desenvolvedor Node",
+    "Desenvolvedor Node.js",
+    "PHP Developer",
+    "Laravel Developer",
+    "Node.js Developer",
+    "Desenvolvedor Java",
+    "Desenvolvedor Python",
+    "Desenvolvedor Go",
+    "Desenvolvedor Golang",
+    # --- Cargos de dev genéricos / liderança técnica ---
+    "Desenvolvedor",
+    "Desenvolvedora",
+    "Software Developer",
+    "Programador",
+    "Programadora",
+    "Tech Lead",
+    "Technical Lead",
+    "Engenheiro de Plataforma",
+    "Platform Engineer",
+    # --- Fullstack / frontend / mobile (rede mais larga) ---
+    "Desenvolvedor Full Stack",
+    "Desenvolvedor Fullstack",
+    "Full Stack Developer",
+    "Fullstack Developer",
+    "Desenvolvedor TypeScript",
+    "Desenvolvedor React",
+    "Desenvolvedor Next.js",
+    "Desenvolvedor Frontend",
+    "Desenvolvedor Front-end",
+    "Frontend Developer",
+    "Front-end Developer",
+    "Desenvolvedor Web",
+    "Desenvolvedor Mobile",
+    "Desenvolvedor Flutter",
 ]
 
-# Cargo ambíguo: título que também é usado em vaga sem nada a ver com
-# dados/BI (ex: "Business Analyst" e "Analista de Negócios" existem em
-# TI, finanças, RH, operações... qualquer área). Só conta como match se o
-# título TAMBÉM tiver um QUALIFICADORES_DADOS junto — é o que permite ir
-# adicionando cargo adjacente (Product Analyst, CRM Analyst, Marketing
-# Analyst etc.) sem cada um virar fonte de ruído sozinho.
+# Cargo ambíguo: título que também é usado fora de software (ex:
+# "Engenheiro" existe em civil/mecânica/produção; "Analista de Sistemas/TI"
+# pode ser suporte/infra). Só conta como match se o título TAMBÉM tiver um
+# QUALIFICADORES_DADOS junto (uma stack/termo de software) — é o que permite
+# pegar cargo adjacente sem cada um virar fonte de ruído sozinho.
 KEYWORDS_CARGO_AMBIGUO = [
-    "Business Analyst",
-    "Analista de Negócios",
-    "Business Analytics",
-    "Analista de Performance",
+    "Engenheiro",
+    "Engineer",
+    "Analista de Sistemas",
+    "Analista de TI",
+    "Analista Desenvolvedor",
 ]
 
-# Termo que precisa aparecer junto no título quando o cargo é ambíguo, pra
-# confirmar que é vaga de dados/BI e não de outra área qualquer.
+# Termo de software que precisa aparecer junto no título quando o cargo é
+# ambíguo, pra confirmar que é vaga de desenvolvimento e não de outra área.
+# (Nome da variável mantido por ser importado em vários módulos; o conteúdo
+# agora é "vocabulário de software", não de dados.)
 QUALIFICADORES_DADOS = [
-    "dados",
-    "data",
-    "bi",
-    "sql",
-    "power bi",
-    "analytics",
-    "kpi",
-    "dashboard",
-    "métricas",
-    "reporting",
-    "insights",
+    "software",
+    "backend",
+    "back-end",
+    "back end",
+    "fullstack",
+    "full stack",
+    "full-stack",
+    "desenvolvimento",
+    "web",
+    "api",
+    "php",
+    "laravel",
+    "node",
+    "node.js",
+    "typescript",
+    "javascript",
+    "react",
+    "java",
+    "python",
 ]
 
-# Ferramenta que aparece como núcleo do título ("Analista de Power BI").
-# Só conta como match se o título TAMBÉM tiver uma palavra de cargo — é o
-# espelho da regra de KEYWORDS_CARGO_AMBIGUO: lá o cargo é ambíguo e pede
-# domínio, aqui a ferramenta é ambígua e pede cargo. Sem isso, "Power BI"
-# sozinho aprovaria "Power BI Senior" e "Desenvolvedor (Power BI + Python)",
-# que são vaga de desenvolvimento, não de análise.
+# Stack que aparece como núcleo do título ("Especialista Laravel", "Node
+# Engineer"). Só conta como match se o título TAMBÉM tiver uma palavra de
+# cargo (QUALIFICADORES_CARGO) — espelho da regra de KEYWORDS_CARGO_AMBIGUO:
+# lá o cargo é ambíguo e pede stack, aqui a stack é ambígua e pede cargo.
+# Sem isso, "React" sozinho aprovaria "Recrutador React" ou "React Native
+# Designer".
 FERRAMENTAS_TITULO = [
-    "Power BI",
+    "Laravel",
+    "PHP",
+    "Node",
+    "Node.js",
+    "TypeScript",
+    "React",
+    "Next.js",
 ]
 
-# Palavra de cargo que confirma que a vaga de ferramenta é de análise.
-# "desenvolvedor"/"developer"/"engenheiro" ficam FORA de propósito: é o que
-# mantém vaga de dev fora do radar.
+# Palavra de cargo que confirma que a vaga da stack é de desenvolvimento.
+# Aqui é o INVERSO do perfil original de dados: "desenvolvedor"/"engenheiro"/
+# "developer"/"programador" entram de propósito — são o alvo agora.
 QUALIFICADORES_CARGO = [
-    "analista",
-    "analyst",
+    "desenvolvedor",
+    "desenvolvedora",
+    "developer",
+    "engenheiro",
+    "engenheira",
+    "engineer",
+    "programador",
+    "programadora",
+    "dev",
+    # "especialista"/"specialist" só entram em jogo junto de uma stack de
+    # FERRAMENTAS_TITULO (ex: "Especialista Node.js"), que já é dev — então
+    # não abrem porta pra vaga de outra área.
     "especialista",
     "specialist",
-    "consultor",
-    "consultant",
 ]
 
 KEYWORDS = KEYWORDS_CARGO_FORTE + KEYWORDS_CARGO_AMBIGUO
@@ -116,29 +152,29 @@ TERMOS_CARGO_EXTRA = [
     # termos mais amplos que a keyword exata, mantidos por dar rede mais
     # larga na busca (a keyword em si é mais restrita, de propósito, pra
     # não gerar falso positivo no filtro de título).
-    "power bi",
-    "inteligência de mercado",
+    "desenvolvedor backend",
+    "desenvolvedor back-end",
+    "backend",
+    "desenvolvedor php",
+    "desenvolvedor laravel",
+    "desenvolvedor node",
+    "software engineer",
 ]
 
 TERMOS_CARGO = sorted(set(k.lower() for k in KEYWORDS) | set(TERMOS_CARGO_EXTRA))
 
-# MEDIDO em jobradar.log (12 rodízios completos, Gupy+99Jobs+GeekHunter+
-# Solides): "dax" e "power query" nunca resultaram em nenhuma vaga nova
-# notificada nessas 4 fontes — 0 em 48 buscas cada, a maioria vazia
-# ("0 resultados reais") e o resto timeout. "microsoft fabric" teve 1 vaga
-# no log inteiro (363 notificações) com o termo no título, e essa vaga
-# também tinha "Power BI"/"Analista de BI" no título — já seria achada por
-# termo que continua na lista. Timeout: os 3 termos concentraram metade
-# (13 de 26) dos timeouts dessas 4 fontes sendo só 3 dos 42 termos (7%) —
-# confirma o padrão relatado. Removidos por render zero e custarem sessão
-# igual a um termo de cargo.
+# Stacks buscadas nos sites (rede ampla). A vaga só vira notificação se o
+# TÍTULO também bater no filtro de cargo — então buscar por "laravel" não
+# notifica toda vaga que cita Laravel, só as que têm cargo de dev no título.
+# Focado na stack do perfil (backend PHP/Node/TS). Ajustar conforme o log
+# mostrar termo que rende zero (mesma lógica do perfil original).
 TERMOS_FERRAMENTA = [
-    "sql",
-    "python",
-    "tableau",
-    "qlik",
-    "looker",
-    "bigquery",
+    "php",
+    "laravel",
+    "node.js",
+    "typescript",
+    "react",
+    "next.js",
 ]
 
 TERMOS_BUSCA = TERMOS_CARGO + TERMOS_FERRAMENTA
@@ -154,19 +190,13 @@ TERMOS_BUSCA = TERMOS_CARGO + TERMOS_FERRAMENTA
 # quantos ciclos até cobrir tudo de novo, não o custo de cada ciclo.
 TERMOS_POR_CICLO = 10
 
+# Perfil do Carlos: só vaga REMOTA. Com a lista contendo apenas "Remoto",
+# o filtro (job.py:combina_com) só aprova vaga com modalidade=Remoto — o
+# ramo de cidade presencial fica vazio de propósito. Pra aceitar também
+# presencial/híbrido numa cidade (ex: "Campo Grande"), basta adicionar o
+# nome aqui.
 CIDADES = [
     "Remoto",
-    "Campina Grande",
-    "João Pessoa",
-    "Recife",
-    "Natal",
-    "Maceió",
-    "Jaboatão",
-    "Aracaju",
-    "Teresina",
-    "São Luís",
-    "Petrolina",
-    "Caruaru",
 ]
 
 # MEDIDO: "Data Analyst @ Lisboa" e "Analista de Datos @ Madrid" reprovavam
@@ -214,17 +244,13 @@ ATIVAR_EIXO_IBERICO_BR = False
 # porque o usuário mora aqui e vaga local de verdade interessa.
 LOCATIONS_LINKEDIN = ["Brasil"]
 
-# Mercados adicionais: só busca REMOTA (f_WT=2) — vaga presencial/híbrida
-# num país onde o usuário não mora não serve, então nem faz sentido gastar
-# a passada nacional ali (era puro desperdício: Argentina/Chile já rodavam
-# as duas passadas antes, mas a nacional nunca batia em CIDADES mesmo,
-# que é só cidade brasileira). Espanhol ou português — mesmo critério do
-# pipeline internacional. Lista reaproveita exatamente os países já usados
-# e testados ao vivo no endpoint do LinkedIn em config_intl.py
-# (LOCATIONS_INTL) — evita arriscar nome de país nunca testado (grafia
-# errada ou região que o LinkedIn não resolve como location de verdade,
-# como já visto com "LATAM"/"Latin America").
-LOCATIONS_LINKEDIN_REMOTO_APENAS = ["Argentina", "Chile", "México", "Colômbia", "Espanha", "Portugal"]
+# Mercados adicionais de busca no LinkedIn. VAZIO no perfil do Carlos: ele
+# só quer vaga remota do mercado brasileiro, então não faz sentido gastar
+# ciclo buscando em outros países (o filtro de mercado abaixo derrubaria
+# quase tudo mesmo). O scraper simplesmente pula a lista vazia. Pra reativar
+# busca noutros mercados, colocar os países aqui (usar grafia já testada no
+# endpoint, ex: "Argentina", "Portugal").
+LOCATIONS_LINKEDIN_REMOTO_APENAS = []
 
 # Mercado que a vaga remota precisa aceitar pra contar, quando o texto de
 # local DECLARA um escopo geográfico ("Remote — US only", "Remote — India").
@@ -246,7 +272,7 @@ LOCATIONS_LINKEDIN_REMOTO_APENAS = ["Argentina", "Chile", "México", "Colômbia"
 # quando o texto disser isso literalmente (guarda-chuva de verdade, não
 # substituto de nome de país). Portugal e Espanha entraram nominalmente
 # pelo mesmo motivo, desde antes.
-MERCADOS_REMOTO_ACEITOS = ["Brasil", "LATAM", "Argentina", "Chile", "México", "Colômbia", "Portugal", "Espanha"]
+MERCADOS_REMOTO_ACEITOS = ["Brasil", "LATAM"]
 
 INTERVALO_MINUTOS = int(os.getenv("INTERVALO_MINUTOS", 180))
 

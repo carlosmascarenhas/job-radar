@@ -149,17 +149,17 @@ CASOS_COMBINA_COM = [
     # país hispanofalante já é o próprio sinal.
     ("mercado-confirmado-dispensa-idioma-no-titulo", "Senior Data Analyst", "Remote - Espanha", "Remoto", PERFIL_INTL, True),
 
-    # Perfil Brasil: cargo e cidade são checados em campos separados
-    # (título vs. local) — cidade fora da lista aceita barra mesmo com
-    # cargo batendo.
-    ("cidade-fora-da-lista-barrada", "Analista de Dados", "Nova York", "Presencial", PERFIL_BR, False),
-    ("cargo-fora-do-escopo-barrado", "Vendedor Externo", "Recife, PE", "Presencial", PERFIL_BR, False),
-    ("cargo-forte-cidade-aceita-passa", "Analista de Dados Pleno", "Recife, PE", "Presencial", PERFIL_BR, True),
-    # keywords_ambiguo (ex: "Business Analyst") só conta com qualificador
-    # de dados junto no título — sozinho é ruído de outra área (RH,
-    # finanças).
-    ("cargo-ambiguo-sem-qualificador-barrado", "Business Analyst", "Recife, PE", "Presencial", PERFIL_BR, False),
-    ("cargo-ambiguo-com-qualificador-passa", "Business Analyst com SQL", "Recife, PE", "Presencial", PERFIL_BR, True),
+    # Perfil Brasil (Carlos): backend sênior, SÓ remoto. CIDADES=["Remoto"],
+    # então só passa modalidade=Remoto — vaga presencial numa cidade é
+    # barrada mesmo com o cargo batendo (cargo e local são campos separados).
+    ("presencial-barrada-mesmo-com-cargo", "Desenvolvedor Backend", "São Paulo, SP", "Presencial", PERFIL_BR, False),
+    ("cargo-fora-do-escopo-barrado", "Vendedor Externo", "Remoto", "Remoto", PERFIL_BR, False),
+    ("cargo-forte-remoto-passa", "Desenvolvedor Backend Sênior", "Remoto", "Remoto", PERFIL_BR, True),
+    # keywords_ambiguo (ex: "Engenheiro", "Analista de Sistemas") só conta
+    # com um qualificador de software junto no título — sozinho é ruído de
+    # outra área (eng. civil, suporte de TI).
+    ("cargo-ambiguo-sem-qualificador-barrado", "Analista de Sistemas", "Remoto", "Remoto", PERFIL_BR, False),
+    ("cargo-ambiguo-com-qualificador-passa", "Analista de Sistemas Java", "Remoto", "Remoto", PERFIL_BR, True),
 ]
 
 
